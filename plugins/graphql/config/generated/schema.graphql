@@ -1,0 +1,723 @@
+type Article {
+  _id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  text: String
+}
+
+type ArticleAggregator {
+  count: Int
+}
+
+type ArticleConnection {
+  values: [Article]
+  groupBy: ArticleGroupBy
+  aggregate: ArticleAggregator
+}
+
+type ArticleConnection_id {
+  key: ID
+  connection: ArticleConnection
+}
+
+type ArticleConnectionCreatedAt {
+  key: DateTime
+  connection: ArticleConnection
+}
+
+type ArticleConnectionText {
+  key: String
+  connection: ArticleConnection
+}
+
+type ArticleConnectionUpdatedAt {
+  key: DateTime
+  connection: ArticleConnection
+}
+
+type ArticleGroupBy {
+  _id: [ArticleConnection_id]
+  createdAt: [ArticleConnectionCreatedAt]
+  updatedAt: [ArticleConnectionUpdatedAt]
+  text: [ArticleConnectionText]
+}
+
+input ArticleInput {
+  text: String
+}
+
+input createArticleInput {
+  data: ArticleInput
+}
+
+type createArticlePayload {
+  article: Article
+}
+
+input createMeshInput {
+  data: MeshInput
+}
+
+type createMeshPayload {
+  mesh: Mesh
+}
+
+input createRoleInput {
+  data: RoleInput
+}
+
+type createRolePayload {
+  role: UsersPermissionsRole
+}
+
+input createUserInput {
+  data: UserInput
+}
+
+type createUserPayload {
+  user: UsersPermissionsUser
+}
+
+input createVolumeInput {
+  data: VolumeInput
+}
+
+type createVolumePayload {
+  volume: Volume
+}
+
+"""
+The `DateTime` scalar represents a date and time following the ISO 8601 standard
+"""
+scalar DateTime
+
+input deleteArticleInput {
+  where: InputID
+}
+
+type deleteArticlePayload {
+  article: Article
+}
+
+input deleteMeshInput {
+  where: InputID
+}
+
+type deleteMeshPayload {
+  mesh: Mesh
+}
+
+input deleteRoleInput {
+  where: InputID
+}
+
+type deleteRolePayload {
+  role: UsersPermissionsRole
+}
+
+input deleteUserInput {
+  where: InputID
+}
+
+type deleteUserPayload {
+  user: UsersPermissionsUser
+}
+
+input deleteVolumeInput {
+  where: InputID
+}
+
+type deleteVolumePayload {
+  volume: Volume
+}
+
+input editArticleInput {
+  text: String
+}
+
+input editFileInput {
+  name: String
+  hash: String
+  sha256: String
+  ext: String
+  mime: String
+  size: String
+  url: String
+  provider: String
+  public_id: String
+  related: [ID]
+}
+
+input editMeshInput {
+  file: ID
+  name: String
+  user: ID
+  volume: ID
+  processed: Boolean
+  thumbnail: ID
+}
+
+input editRoleInput {
+  name: String
+  description: String
+  type: String
+  permissions: [ID]
+  users: [ID]
+}
+
+input editUserInput {
+  username: String
+  email: String
+  provider: String
+  password: String
+  resetPasswordToken: String
+  confirmed: Boolean
+  blocked: Boolean
+  role: ID
+  meshes: [ID]
+  name: String
+}
+
+input editVolumeInput {
+  file: ID
+  mesh: ID
+}
+
+input FileInput {
+  name: String!
+  hash: String!
+  sha256: String
+  ext: String
+  mime: String!
+  size: String!
+  url: String!
+  provider: String!
+  public_id: String
+  related: [ID]
+}
+
+input InputID {
+  id: ID!
+}
+
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON
+
+type Mesh {
+  _id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  file: UploadFile
+  name: String!
+  user: UsersPermissionsUser
+  volume: Volume
+  processed: Boolean
+  thumbnail: UploadFile
+}
+
+type MeshAggregator {
+  count: Int
+}
+
+type MeshConnection {
+  values: [Mesh]
+  groupBy: MeshGroupBy
+  aggregate: MeshAggregator
+}
+
+type MeshConnection_id {
+  key: ID
+  connection: MeshConnection
+}
+
+type MeshConnectionCreatedAt {
+  key: DateTime
+  connection: MeshConnection
+}
+
+type MeshConnectionFile {
+  key: ID
+  connection: MeshConnection
+}
+
+type MeshConnectionName {
+  key: String
+  connection: MeshConnection
+}
+
+type MeshConnectionProcessed {
+  key: Boolean
+  connection: MeshConnection
+}
+
+type MeshConnectionThumbnail {
+  key: ID
+  connection: MeshConnection
+}
+
+type MeshConnectionUpdatedAt {
+  key: DateTime
+  connection: MeshConnection
+}
+
+type MeshConnectionUser {
+  key: ID
+  connection: MeshConnection
+}
+
+type MeshConnectionVolume {
+  key: ID
+  connection: MeshConnection
+}
+
+type MeshGroupBy {
+  _id: [MeshConnection_id]
+  createdAt: [MeshConnectionCreatedAt]
+  updatedAt: [MeshConnectionUpdatedAt]
+  file: [MeshConnectionFile]
+  name: [MeshConnectionName]
+  user: [MeshConnectionUser]
+  volume: [MeshConnectionVolume]
+  processed: [MeshConnectionProcessed]
+  thumbnail: [MeshConnectionThumbnail]
+}
+
+input MeshInput {
+  file: ID
+  name: String!
+  user: ID
+  volume: ID
+  processed: Boolean
+  thumbnail: ID
+}
+
+union Morph = UsersPermissionsMe | UsersPermissionsMeRole | Article | createArticlePayload | updateArticlePayload | deleteArticlePayload | ArticleConnection | ArticleAggregator | ArticleGroupBy | ArticleConnection_id | ArticleConnectionCreatedAt | ArticleConnectionUpdatedAt | ArticleConnectionText | Mesh | createMeshPayload | updateMeshPayload | deleteMeshPayload | MeshConnection | MeshAggregator | MeshGroupBy | MeshConnection_id | MeshConnectionCreatedAt | MeshConnectionUpdatedAt | MeshConnectionFile | MeshConnectionName | MeshConnectionUser | MeshConnectionVolume | MeshConnectionProcessed | MeshConnectionThumbnail | Volume | createVolumePayload | updateVolumePayload | deleteVolumePayload | VolumeConnection | VolumeAggregator | VolumeGroupBy | VolumeConnection_id | VolumeConnectionCreatedAt | VolumeConnectionUpdatedAt | VolumeConnectionFile | VolumeConnectionMesh | UploadFile | UploadFileConnection | UploadFileAggregator | UploadFileGroupBy | UploadFileConnection_id | UploadFileConnectionCreatedAt | UploadFileConnectionUpdatedAt | UploadFileConnectionName | UploadFileConnectionHash | UploadFileConnectionSha256 | UploadFileConnectionExt | UploadFileConnectionMime | UploadFileConnectionSize | UploadFileConnectionUrl | UploadFileConnectionProvider | UploadFileConnectionPublic_id | UsersPermissionsPermission | UsersPermissionsRole | createRolePayload | updateRolePayload | deleteRolePayload | UsersPermissionsRoleConnection | UsersPermissionsRoleAggregator | UsersPermissionsRoleGroupBy | UsersPermissionsRoleConnection_id | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionType | UsersPermissionsUser | createUserPayload | updateUserPayload | deleteUserPayload | UsersPermissionsUserConnection | UsersPermissionsUserAggregator | UsersPermissionsUserGroupBy | UsersPermissionsUserConnection_id | UsersPermissionsUserConnectionUsername | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionProvider | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionRole | UsersPermissionsUserConnectionName
+
+type Mutation {
+  createArticle(input: createArticleInput): createArticlePayload
+  updateArticle(input: updateArticleInput): updateArticlePayload
+  deleteArticle(input: deleteArticleInput): deleteArticlePayload
+  createMesh(input: createMeshInput): createMeshPayload
+  updateMesh(input: updateMeshInput): updateMeshPayload
+  deleteMesh(input: deleteMeshInput): deleteMeshPayload
+  createVolume(input: createVolumeInput): createVolumePayload
+  updateVolume(input: updateVolumeInput): updateVolumePayload
+  deleteVolume(input: deleteVolumeInput): deleteVolumePayload
+
+  """Create a new role"""
+  createRole(input: createRoleInput): createRolePayload
+
+  """Update an existing role"""
+  updateRole(input: updateRoleInput): updateRolePayload
+
+  """Delete an existing role"""
+  deleteRole(input: deleteRoleInput): deleteRolePayload
+
+  """Create a new user"""
+  createUser(input: createUserInput): createUserPayload
+
+  """Update an existing user"""
+  updateUser(input: updateUserInput): updateUserPayload
+
+  """Delete an existing user"""
+  deleteUser(input: deleteUserInput): deleteUserPayload
+  upload(refId: ID, ref: String, source: String, file: Upload!): UploadFile!
+}
+
+type Query {
+  article(id: ID!): Article
+  articles(sort: String, limit: Int, start: Int, where: JSON): [Article]
+  articlesConnection(sort: String, limit: Int, start: Int, where: JSON): ArticleConnection
+  mesh(id: ID!): Mesh
+  meshes(sort: String, limit: Int, start: Int, where: JSON): [Mesh]
+  meshesConnection(sort: String, limit: Int, start: Int, where: JSON): MeshConnection
+  volume(id: ID!): Volume
+  volumes(sort: String, limit: Int, start: Int, where: JSON): [Volume]
+  volumesConnection(sort: String, limit: Int, start: Int, where: JSON): VolumeConnection
+  files(sort: String, limit: Int, start: Int, where: JSON): [UploadFile]
+  filesConnection(sort: String, limit: Int, start: Int, where: JSON): UploadFileConnection
+  role(id: ID!): UsersPermissionsRole
+
+  """
+  Retrieve all the existing roles. You can't apply filters on this query.
+  """
+  roles(sort: String, limit: Int, start: Int, where: JSON): [UsersPermissionsRole]
+  rolesConnection(sort: String, limit: Int, start: Int, where: JSON): UsersPermissionsRoleConnection
+  user(id: ID!): UsersPermissionsUser
+  users(sort: String, limit: Int, start: Int, where: JSON): [UsersPermissionsUser]
+  usersConnection(sort: String, limit: Int, start: Int, where: JSON): UsersPermissionsUserConnection
+  me: UsersPermissionsMe
+}
+
+input RoleInput {
+  name: String!
+  description: String
+  type: String
+  permissions: [ID]
+  users: [ID]
+}
+
+input updateArticleInput {
+  where: InputID
+  data: editArticleInput
+}
+
+type updateArticlePayload {
+  article: Article
+}
+
+input updateMeshInput {
+  where: InputID
+  data: editMeshInput
+}
+
+type updateMeshPayload {
+  mesh: Mesh
+}
+
+input updateRoleInput {
+  where: InputID
+  data: editRoleInput
+}
+
+type updateRolePayload {
+  role: UsersPermissionsRole
+}
+
+input updateUserInput {
+  where: InputID
+  data: editUserInput
+}
+
+type updateUserPayload {
+  user: UsersPermissionsUser
+}
+
+input updateVolumeInput {
+  where: InputID
+  data: editVolumeInput
+}
+
+type updateVolumePayload {
+  volume: Volume
+}
+
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload
+
+type UploadFile {
+  _id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+  hash: String!
+  sha256: String
+  ext: String
+  mime: String!
+  size: String!
+  url: String!
+  provider: String!
+  public_id: String
+  related(sort: String, limit: Int, start: Int, where: JSON): [Morph]
+}
+
+type UploadFileAggregator {
+  count: Int
+}
+
+type UploadFileConnection {
+  values: [UploadFile]
+  groupBy: UploadFileGroupBy
+  aggregate: UploadFileAggregator
+}
+
+type UploadFileConnection_id {
+  key: ID
+  connection: UploadFileConnection
+}
+
+type UploadFileConnectionCreatedAt {
+  key: DateTime
+  connection: UploadFileConnection
+}
+
+type UploadFileConnectionExt {
+  key: String
+  connection: UploadFileConnection
+}
+
+type UploadFileConnectionHash {
+  key: String
+  connection: UploadFileConnection
+}
+
+type UploadFileConnectionMime {
+  key: String
+  connection: UploadFileConnection
+}
+
+type UploadFileConnectionName {
+  key: String
+  connection: UploadFileConnection
+}
+
+type UploadFileConnectionProvider {
+  key: String
+  connection: UploadFileConnection
+}
+
+type UploadFileConnectionPublic_id {
+  key: String
+  connection: UploadFileConnection
+}
+
+type UploadFileConnectionSha256 {
+  key: String
+  connection: UploadFileConnection
+}
+
+type UploadFileConnectionSize {
+  key: String
+  connection: UploadFileConnection
+}
+
+type UploadFileConnectionUpdatedAt {
+  key: DateTime
+  connection: UploadFileConnection
+}
+
+type UploadFileConnectionUrl {
+  key: String
+  connection: UploadFileConnection
+}
+
+type UploadFileGroupBy {
+  _id: [UploadFileConnection_id]
+  createdAt: [UploadFileConnectionCreatedAt]
+  updatedAt: [UploadFileConnectionUpdatedAt]
+  name: [UploadFileConnectionName]
+  hash: [UploadFileConnectionHash]
+  sha256: [UploadFileConnectionSha256]
+  ext: [UploadFileConnectionExt]
+  mime: [UploadFileConnectionMime]
+  size: [UploadFileConnectionSize]
+  url: [UploadFileConnectionUrl]
+  provider: [UploadFileConnectionProvider]
+  public_id: [UploadFileConnectionPublic_id]
+}
+
+input UserInput {
+  username: String!
+  email: String!
+  provider: String
+  password: String
+  resetPasswordToken: String
+  confirmed: Boolean
+  blocked: Boolean
+  role: ID
+  meshes: [ID]
+  name: String
+}
+
+type UsersPermissionsMe {
+  _id: ID!
+  username: String!
+  email: String!
+  confirmed: Boolean
+  blocked: Boolean
+  role: UsersPermissionsMeRole
+}
+
+type UsersPermissionsMeRole {
+  _id: ID!
+  name: String!
+  description: String
+  type: String
+}
+
+type UsersPermissionsPermission {
+  _id: ID!
+  type: String!
+  controller: String!
+  action: String!
+  enabled: Boolean!
+  policy: String
+  role: UsersPermissionsRole
+}
+
+type UsersPermissionsRole {
+  _id: ID!
+  name: String!
+  description: String
+  type: String
+  permissions(sort: String, limit: Int, start: Int, where: JSON): [UsersPermissionsPermission]
+  users(sort: String, limit: Int, start: Int, where: JSON): [UsersPermissionsUser]
+}
+
+type UsersPermissionsRoleAggregator {
+  count: Int
+}
+
+type UsersPermissionsRoleConnection {
+  values: [UsersPermissionsRole]
+  groupBy: UsersPermissionsRoleGroupBy
+  aggregate: UsersPermissionsRoleAggregator
+}
+
+type UsersPermissionsRoleConnection_id {
+  key: ID
+  connection: UsersPermissionsRoleConnection
+}
+
+type UsersPermissionsRoleConnectionDescription {
+  key: String
+  connection: UsersPermissionsRoleConnection
+}
+
+type UsersPermissionsRoleConnectionName {
+  key: String
+  connection: UsersPermissionsRoleConnection
+}
+
+type UsersPermissionsRoleConnectionType {
+  key: String
+  connection: UsersPermissionsRoleConnection
+}
+
+type UsersPermissionsRoleGroupBy {
+  _id: [UsersPermissionsRoleConnection_id]
+  name: [UsersPermissionsRoleConnectionName]
+  description: [UsersPermissionsRoleConnectionDescription]
+  type: [UsersPermissionsRoleConnectionType]
+}
+
+type UsersPermissionsUser {
+  _id: ID!
+  username: String!
+  email: String!
+  provider: String
+  confirmed: Boolean
+  blocked: Boolean
+  role: UsersPermissionsRole
+  name: String
+  meshes(sort: String, limit: Int, start: Int, where: JSON): [Mesh]
+}
+
+type UsersPermissionsUserAggregator {
+  count: Int
+}
+
+type UsersPermissionsUserConnection {
+  values: [UsersPermissionsUser]
+  groupBy: UsersPermissionsUserGroupBy
+  aggregate: UsersPermissionsUserAggregator
+}
+
+type UsersPermissionsUserConnection_id {
+  key: ID
+  connection: UsersPermissionsUserConnection
+}
+
+type UsersPermissionsUserConnectionBlocked {
+  key: Boolean
+  connection: UsersPermissionsUserConnection
+}
+
+type UsersPermissionsUserConnectionConfirmed {
+  key: Boolean
+  connection: UsersPermissionsUserConnection
+}
+
+type UsersPermissionsUserConnectionEmail {
+  key: String
+  connection: UsersPermissionsUserConnection
+}
+
+type UsersPermissionsUserConnectionName {
+  key: String
+  connection: UsersPermissionsUserConnection
+}
+
+type UsersPermissionsUserConnectionProvider {
+  key: String
+  connection: UsersPermissionsUserConnection
+}
+
+type UsersPermissionsUserConnectionRole {
+  key: ID
+  connection: UsersPermissionsUserConnection
+}
+
+type UsersPermissionsUserConnectionUsername {
+  key: String
+  connection: UsersPermissionsUserConnection
+}
+
+type UsersPermissionsUserGroupBy {
+  _id: [UsersPermissionsUserConnection_id]
+  username: [UsersPermissionsUserConnectionUsername]
+  email: [UsersPermissionsUserConnectionEmail]
+  provider: [UsersPermissionsUserConnectionProvider]
+  confirmed: [UsersPermissionsUserConnectionConfirmed]
+  blocked: [UsersPermissionsUserConnectionBlocked]
+  role: [UsersPermissionsUserConnectionRole]
+  name: [UsersPermissionsUserConnectionName]
+}
+
+type Volume {
+  _id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  file: UploadFile
+  mesh: Mesh
+}
+
+type VolumeAggregator {
+  count: Int
+}
+
+type VolumeConnection {
+  values: [Volume]
+  groupBy: VolumeGroupBy
+  aggregate: VolumeAggregator
+}
+
+type VolumeConnection_id {
+  key: ID
+  connection: VolumeConnection
+}
+
+type VolumeConnectionCreatedAt {
+  key: DateTime
+  connection: VolumeConnection
+}
+
+type VolumeConnectionFile {
+  key: ID
+  connection: VolumeConnection
+}
+
+type VolumeConnectionMesh {
+  key: ID
+  connection: VolumeConnection
+}
+
+type VolumeConnectionUpdatedAt {
+  key: DateTime
+  connection: VolumeConnection
+}
+
+type VolumeGroupBy {
+  _id: [VolumeConnection_id]
+  createdAt: [VolumeConnectionCreatedAt]
+  updatedAt: [VolumeConnectionUpdatedAt]
+  file: [VolumeConnectionFile]
+  mesh: [VolumeConnectionMesh]
+}
+
+input VolumeInput {
+  file: ID
+  mesh: ID
+}

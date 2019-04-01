@@ -1,0 +1,44 @@
+{
+  "connection": "default",
+  "collectionName": "mesh",
+  "info": {
+    "name": "mesh",
+    "description": ""
+  },
+  "options": {
+    "timestamps": true
+  },
+  "attributes": {
+    "file": {
+      "model": "file",
+      "via": "related",
+      "plugin": "upload",
+      "required": true
+    },
+    "name": {
+      "default": "",
+      "type": "string",
+      "required": true
+    },
+    "user": {
+      "model": "user",
+      "via": "meshes",
+      "columnName": "owner",
+      "plugin": "users-permissions"
+    },
+    "volume": {
+      "model": "volume",
+      "via": "mesh"
+    },
+    "processed": {
+      "default": false,
+      "type": "boolean"
+    },
+    "thumbnail": {
+      "model": "file",
+      "via": "related",
+      "plugin": "upload",
+      "required": false
+    }
+  }
+}

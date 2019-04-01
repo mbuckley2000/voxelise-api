@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/meshes",
+      "handler": "Mesh.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/meshes/count",
+      "handler": "Mesh.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/meshes/:_id",
+      "handler": "Mesh.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/meshes",
+      "handler": "Mesh.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/meshes/:_id",
+      "handler": "Mesh.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/meshes/:_id",
+      "handler": "Mesh.destroy",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}
